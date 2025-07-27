@@ -1,13 +1,19 @@
 
 terraform {
-  required_providers {
-    azurerm = {
-      source  = "hashicorp/azurerm"
-      version = "~> 3.0"
-    }
+required_providers {
+  azurerm = {
+    source  = "hashicorp/azurerm"
+    version = "~> 3.0"
   }
+}
+backend "azurerm" {
+  resource_group_name  = "GRpipe"
+  storage_account_name = "strgpipe"
+  container_name       = "tfstatefiles"
+  key                  = "dev.terraform.tfstate"
+}
 
-  required_version = ">= 0.12"
+ 
 }
 
 
@@ -29,8 +35,8 @@ resource "azurerm_resource_group" "example1" {
 resource "azurerm_storage_account" "exstg" {
 
   name                     = "strgpipe"
-  resource_group_name      = "GRpipe"
-  location                 = "West Europe"
+  resource_group_name      = azurerm_resource_group.example1.name
+  location                 = azurerm_resource_group.example1.location
   account_tier             = "Standard"
   account_replication_type = "GRS"
 
@@ -38,25 +44,16 @@ resource "azurerm_storage_account" "exstg" {
 }
 
 
-
-resource "azurerm_storage_account" "exstg" {
-
-  name                     = "strgpipe"
-  resource_group_name      = "GRpipe"
-  location                 = "West Europe"
-  account_tier             = "Standard"
-  account_replication_type = "GRS"
-
-
-}
 
 resource "azurerm_storage_account" "exstg1" {
 
   name                     = "strgpipe1"
-  resource_group_name      = "GRpipe"
-  location                 = "West Europe"
+  resource_group_name      = azurerm_resource_group.example1.name
+  location                 = azurerm_resource_group.example1.location
   account_tier             = "Standard"
   account_replication_type = "GRS"
 
 
 }
+
+
