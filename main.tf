@@ -7,9 +7,9 @@ required_providers {
   }
 }
 backend "azurerm" {
-  resource_group_name  = "GRpipe"
-  storage_account_name = "strgpipe"
-  container_name       = "tfstatefiles"
+  resource_group_name  = "demo"
+  storage_account_name = "pipelinestg"
+  container_name       = "pipelinecon"
   key                  = "dev.terraform.tfstate"
 }
 
